@@ -1,13 +1,42 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+    <!-- 搜索 -->
+    <SearchInput></SearchInput>
+
+    <!-- 轮播图 -->
+    <view class="index_swiper">
+        <swiper  indicator-dots  indicator-color="rgba(255,255,255,0.6)"  autoplay indicator-active-color="rgba(255,255,255)" circular>
+            <swiper-item wx:for="{{swiperList}}" wx:key="goods_id">
+                <navigator url="{{item.navigator_url}}" open-type="navigator">
+                    <image src="{{item.image_src}}" mode="widthFix"></image>
+                </navigator>
+            </swiper-item>
+        </swiper>
+    </view>
+
+    <!-- 分类 -->
+    <view class="index_cate">
+        <navigator wx:for='{{cateList}}'>
+            <image src="{{item.image_src}}" mode="widthFix" />
+        </navigator>
+          
+    </view>
+
+    <!-- 商品展示 -->
+    <view class="index_floor">
+        <view class="floor_group" wx:for="{{floorList}}" wx:for-item="item1" wx:for-index="index1">
+             <!--标题部分 -->
+             <view class="floor_title">
+                <navigator url="" open-type="navigate">
+                  <image src="{{item1.floor_title.image_src}}" mode="widthFix" />
+                </navigator>
+             </view>
+             <!-- 内容区域 -->
+             <view class="floor_content">
+                <navigator url="" open-type="navigate" wx:for="{{item1.product_list}}" wx:for-item="item2" wx:for-index="index2">
+                    <image src="{{item2.image_src}}" mode="{{index2==0?'widthFix':'scaleToFill'}}" />
+                </navigator>
+             </view>
+        </view>
+    </view>
 </view>
